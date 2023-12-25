@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys
 
 ###
@@ -161,17 +163,31 @@ class RotorSelection:
         self.selection.append(self.rotors['III'])
 
     def getRotors(self):
-        for x in len(self.selection):
-            if x == len(self.selection):
+        for key in self.rotors:
+            self.rotors[key] = None
+
+        y = len(self.selection)-1
+        print(self.selection)
+        for x in range(y):
+            if x == y:
                 break
-            self.selection[x].next = self.selection[x+1]
+            self.selection[y-x].next = self.selection[y-x-1]
 
         return self.selection[-1]
 
     def printRotors(self):
         for name in self.rotors:
+            if self.rotors[name] in self.selection:
+                rotorPosition = self.selection.index(self.rotors[name])
+                print(rotorPosition,name)
+            else:
+                print(" ",name)
 
-            print(name)
+    def changeRotors(self):
+        print("Current selected rotors:")
+        for rotor in self.selection:
+            print(rotor) 
+
 
     def menu(self):
         while True:
@@ -182,7 +198,7 @@ class RotorSelection:
             elif (choice == "1"):
                 self.printRotors()
             elif (choice == "2"):
-                pass
+                self.changeRotors()
             elif (choice == "3"):
                 pass
             else:
